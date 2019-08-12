@@ -31,14 +31,7 @@ public class CountryController
 	@GetMapping(value = "/size/{testLength}", produces = {"application/json"})
 	public ResponseEntity<?> getFilteredCountriesByNameLength(@PathVariable int testLength)
 	{
-		ArrayList<Country> rtnList = CountriesApplication.ourCountryList.findCountries(e -> e.getName().length() >= testLength);
-		rtnList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
-		return new ResponseEntity<>(rtnList, HttpStatus.OK);
-	}
-	@GetMapping(value = "/size/{testPopulation}", produces = {"application/json"})
-	public ResponseEntity<?> getFilteredCountriesByPopulation(@PathVariable int testPopulation)
-	{
-		ArrayList<Country> rtnList = CountriesApplication.ourCountryList.findCountries(e -> e.getPopulation() >= testPopulation);
+		ArrayList<Country> rtnList = CountriesApplication.ourCountryList.findCountries(e -> e.getName().length() <= testLength);
 		rtnList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 		return new ResponseEntity<>(rtnList, HttpStatus.OK);
 	}
