@@ -14,8 +14,14 @@ import java.util.ArrayList;
 public class PopulationController
 {
 	@GetMapping(value = "/{testPopulation}", produces = {"application/json"})
-	public ResponseEntity<?> getFilteredCountriesByMaxPopulation(@PathVariable int testPopulation)
+	public ResponseEntity<?> getFilteredCountriesByMaxPopulatiodn(@PathVariable long testPopulation)
 	{
+		ArrayList<Country> maxList = CountriesApplication.ourCountryList.countryList;
+		maxList.sort((c1, c2) -> (int) (c2.getPopulation() - c1.getPopulation()));
+		if (testPopulation > 999999999)
+			{
+			return new ResponseEntity<>(maxList.get(0), HttpStatus.OK);
+			}
 		ArrayList<Country> rtnList = CountriesApplication.ourCountryList.findCountries(e -> e.getPopulation() >= testPopulation);
 		rtnList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 		return new ResponseEntity<>(rtnList, HttpStatus.OK);
